@@ -1,0 +1,25 @@
+FROM tor2/centos-source-openstack-base:4.0.0
+MAINTAINER Kolla Project (https://launchpad.net/kolla)
+
+
+
+
+
+
+
+ADD tempest-archive /tempest-source
+# NOTE(Jeffrey4l): remove the tempest version constraint in the
+# upper-constrains.txt file. Otherwise, it will be failed.
+RUN ln -s tempest-source/* tempest \
+    && sed -i 's/^tempest===.*$//' requirements/upper-constraints.txt \
+    && /var/lib/kolla/venv/bin/pip --no-cache-dir install --upgrade -c requirements/upper-constraints.txt /tempest \
+    && mkdir -p /etc/tempest /var/log/tempest /etc/tempest/tempest_lock
+
+
+
+WORKDIR /tempest
+
+COPY extend_start.sh /usr/local/bin/kolla_extend_start
+RUN chmod 755 /usr/local/bin/kolla_extend_start
+
+

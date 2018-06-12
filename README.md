@@ -1,2 +1,2 @@
 # ocata-dockerfile
-OpenStack Ocata Dockfile.
+OpenStack Ocata Dockerfile.
